@@ -6,8 +6,7 @@ from pydantic import GetCoreSchemaHandler
 
 class DateTime(str):
     '''
-    Класс для работы с временными метками с часовой дискретностью.
-    Всегда хранит начало часа.
+    Класс для работы с временными метками с секундной дискретностью.
     '''
 
     def __new__(cls, value: Union[str, datetime]) -> 'DateTime':
