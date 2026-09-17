@@ -11,17 +11,15 @@ class DateTime(str):
 
     def __new__(cls, value: Union[str, datetime]) -> 'DateTime':
         if isinstance(value, datetime):
-            value = dt.strftime('%Y-%m-%d %H:%M:%S')
-
-        if not isinstance(value, str):
-            raise ValueError(
-                f'Ожидалась строка, получен {type(value)}: {value}')
-
-        dt = cls._parse_string(value)
-        normalized_str = dt.strftime('%Y-%m-%d %H:%M:%S')
-
-        instance = super().__new__(cls, normalized_str)
-        return instance
+            normalized = value.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(value, str):
+            normalized = cls._parse_string(value).strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            raise TypeError(
+                f'DateTime: ожидалась str или datetime, '
+                f'получено {type(value).__name__}: {value!r}'
+            )
+        return super().__new__(cls, normalized)
 
     @classmethod
     def _parse_string(cls, value: str) -> datetime:
