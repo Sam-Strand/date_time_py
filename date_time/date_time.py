@@ -48,15 +48,15 @@ class DateTime(str):
         )
 
     def __sub__(self, seconds: int) -> 'DateTime':
-        dt = self._get_datetime() - timedelta(seconds=seconds)
+        dt = self.to_datetime() - timedelta(seconds=seconds)
         return DateTime(dt)
 
     def __add__(self, seconds: int) -> 'DateTime':
-        dt = self._get_datetime() + timedelta(seconds=seconds)
+        dt = self.to_datetime() + timedelta(seconds=seconds)
         return DateTime(dt)
 
-    def _get_datetime(self) -> datetime:
-        return DateTime.strptime(self, '%Y-%m-%d %H:%M:%S')
+    def to_datetime(self) -> datetime:
+        return datetime.strptime(self, '%Y-%m-%d %H:%M:%S')
 
     @classmethod
     def __get_pydantic_core_schema__(
